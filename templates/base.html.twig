@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    </head>
+    <header>
+        <div class="title">
+            <h1>{% block titrePage %}{% endblock %}</h1>
+        </div>
+        <nav>
+            <ul>
+                <li>
+                    <a href="{{ path('author_list') }}">Auteurs</a>
+                </li>
+                <li>
+                    <a href="{{ path('book_list') }}">Livres</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <body>
+        <main>
+            <div class="content">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+        <footer>
+            <p>Oh un footer !</p>
+        </footer>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

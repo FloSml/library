@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ book.title }}{% endblock %}
+
+{% block titrePage %}{{ book.title }}{% endblock %}
+
+{% block content %}
+
+    <section class="container-book-show">
+            <article class="book-show">
+                <h2>{{ book.title }}</h2>
+                <div class="img-resume">
+                    <img src="http://placehold.it/250x320" alt="">
+                    <h3>Résumé du livre</h3>
+                    <br>
+                    <p class="resume">{{ book.resume }}</p>
+                    <p class="resume">{{ book.resume }}</p>
+                </div>
+                <div class="infos">
+                    <h3>Informations</h3>
+                    <br>
+                    <p><strong>Genre :</strong> {{ book.style }}</p>
+                    <p><strong>Nombre de pages :</strong> {{ book.nbPages }}</p>
+                    <br>
+                    {% if book.inStock == 'true' %}
+                        <p class="en-stock">Le livre est en stock</p>
+                    {% else %}
+                        <p class="pas-en-stock">Le livre n'est plus en stock</p>
+                    {% endif %}
+                </div>
+                <p class="return">
+                    <a href="{{ path('book_list') }}" class="btn">Retour à la liste des livres</a>
+                </p>
+            </article>
+    </section>
+
+{% endblock %}
