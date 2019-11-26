@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout d'un auteur{% endblock %}
+
+{% block titrePage %}Ajout d'un auteur{% endblock %}
+
+{% block content %}
+
+    <section class="container-full">
+        <article class="article-full">
+            <h2 class="title-add">Votre auteur a bien été ajouté</h2>
+            <h3>Nom de l'auteur</h3>
+            <p>{{ author.firstname }} {{ author.name }}</p>
+            <h3>Date de naissance</h3>
+            <p>{{ author.birthDate | date('d/m/Y') }}</p>
+            <h3>Date de mort</h3>
+            {% if author.deathDate is not null %}
+                <p>{{ author.deathDate | date('d/m/Y') }}</p>
+            {% else %}
+                <p>L'auteur est en vie et tant mieux !<br>La santé c'est important t'as vu.</p>
+            {% endif %}
+            <h3>Biographie</h3>
+            <p>{{ author.biography }}</p>
+        </article>
+    </section>
+
+{% endblock %}

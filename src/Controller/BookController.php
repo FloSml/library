@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Book;
 use App\Repository\BookRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -23,14 +25,28 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/book/new", name="book_create")
+     * @Route("/book/insert", name="book_insert")
      */
-    public function bookCreate(BookRepository $bookRepository)
+    public function insertBook(EntityManagerInterface $entityManager)
     {
-        $book = $bookRepository->findAll();
+        // On crée un nouveau livre pour l'envoyer dans la table book
+        $book = new Book();
+        $bookTitle = $book->setTitle('Oh il a l\'air bien ton livre');
+        $bookResume = $book->setResume('Ceci est un résumé');
+        $bookStyle = $book->setStyle('Policier');
+        $bookInStock = $book->setInStock('false');
+        $bookNbPages = $book->setNbPages('738');
 
-        return $this->render('book-create.html.twig', [
+        $entityManager->persist($book);
+        $entityManager->flush();
+
+        return $this->render('book-insert.html.twig', [
             'book' => $book,
+            'title' => $bookTitle,
+            'resume' => $bookResume,
+            'style' => $bookStyle,
+            'inStock' => $bookInStock,
+            'nbPages' => $bookNbPages,
         ]);
     }
 

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout d'un livre{% endblock %}
+
+{% block titrePage %}Ajout d'un livre{% endblock %}
+
+{% block content %}
+
+    <section class="container-full">
+        <article class="article-full">
+            <h2 class="title-add">Votre livre a bien été ajouté</h2>
+            <h3>Titre du livre</h3>
+            <p>{{ book.title }}</p>
+            <h3>Résumé du livre</h3>
+            <p>{{ book.resume }}</p>
+            <h3>Style du livre</h3>
+            <p>{{ book.style }}</p>
+            <h3>En stock</h3>
+            <p>{% if book.inStock == 'true' %}
+            <span class="en-stock">Le livre est en stock</span>
+            {% else %}
+            <span class="pas-en-stock">Le livre n'est pas en stock</span>
+            {% endif %}</p>
+            <h3>Nombre de pages</h3>
+            <p>{{ book.nbPages }}</p>
+        </article>
+    </section>
+
+{% endblock %}

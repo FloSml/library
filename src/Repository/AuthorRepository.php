@@ -19,11 +19,15 @@ class AuthorRepository extends ServiceEntityRepository
         parent::__construct($registry, Author::class);
     }
 
+    // On crée une fonction getAuthorsByBio
     public function getAuthorsByBio($word)
     {
+        // CreateQueryBuilder nous permet de créer le constructeur de requêtes
         $query = $this->createQueryBuilder('a')
+            // Le where nous permet de
+            // Le LIKE donne une condition de recherche
             ->where('a.biography LIKE :word')
-            // On empêche les injections SQL
+            // On empêche les injections SQL -> on échape ce que l'utilisateur peut rentrer
             ->setParameter('word', '%'.$word.'%')
             // On fait la requête
             ->getQuery();
