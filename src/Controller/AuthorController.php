@@ -47,7 +47,7 @@ class AuthorController extends AbstractController
     /**
      * @Route("/author_by_bio/{word}", name="author_by_bio")
      */
-    // On instencie une -> comme si on faisait un New Repository
+    // On instencie = New Repository
     public function getAuthorsByBio(AuthorRepository $authorRepository, $word)
     {
         // on appelle classe $authorRepository -> dans la méthode getAuthorByBio

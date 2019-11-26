@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}La grande librairie{% endblock %}
+
+{% block titrePage %}Résultat de recherche{% endblock %}
+
+{% block content %}
+
+    <section class="container-book-show">
+        {% for author in author %}
+        <article class="book-show">
+            <h2>{{ author.firstname }} {{ author.name }}</h2>
+            <div class="img-resume">
+                <img src="http://placehold.it/250x320" alt="">
+                <h3>Biographie</h3>
+                <br>
+                <p class="resume">{{ author.biography | raw }}</p>
+            </div>
+            <div class="infos">
+                <h3>Informations</h3>
+                <br>
+                <p>Né le {{ author.birthDate | date ('d/m/Y') }}
+                    {% if author.deathDate is not null %} et mort le {{ author.deathDate | date ('d/m/Y') }}{% endif %}
+                </p>
+                <br>
+            </div>
+            <p class="return">
+                <a href="{{ path('author_list') }}" class="btn">Retour à la liste des auteurs</a>
+            </p>
+        </article>
+        {% endfor %}
+    </section>
+
+{% endblock %}
