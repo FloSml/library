@@ -57,16 +57,4 @@ class AuthorController extends AbstractController
             'authors' => $authors,
         ]);
     }
-
-    /**
-     * @Route("/author/{search}", name="search")
-     */
-    public function authorSearch(AuthorRepository $authorRepository, $search)
-    {
-        $author = $authorRepository->find($id);
-
-        return $this->render('author-show.html.twig', [
-            'author' => $author,
-        ]);
-    }
 }
