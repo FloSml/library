@@ -21,10 +21,47 @@ class AuthorController extends AbstractController
     }
 
     /**
+     * @Route("/author/new", name="author_create")
+     */
+    public function authorCreate(AuthorRepository $authorRepository)
+    {
+        $author = $authorRepository->findAll();
+
+        return $this->render('author-create.html.twig', [
+            'author' => $author,
+        ]);
+    }
+
+    /**
      * @Route("/author/{id}", name="author")
      */
-    //
     public function authorShow(AuthorRepository $authorRepository, $id)
+    {
+        $author = $authorRepository->find($id);
+
+        return $this->render('author-show.html.twig', [
+            'author' => $author,
+        ]);
+    }
+
+    /**
+     * @Route("/author_by_bio/{word}", name="author_by_bio")
+     */
+    // On instencie une -> comme si on faisait un New Repository
+    public function getAuthorsByBio(AuthorRepository $authorRepository, $word)
+    {
+        // on appelle classe $authorRepository -> dans la méthode getAuthorByBio
+        $authors = $authorRepository->getAuthorsByBio($word);
+
+        return $this->render('bio.html.twig', [
+            'authors' => $authors,
+        ]);
+    }
+
+    /**
+     * @Route("/author/{search}", name="search")
+     */
+    public function authorSearch(AuthorRepository $authorRepository, $search)
     {
         $author = $authorRepository->find($id);
 

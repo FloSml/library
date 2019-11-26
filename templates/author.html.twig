@@ -6,17 +6,21 @@
 
 {% block content %}
 
+    <div class="title-head">
+        <h2>Nos auteurs</h2>
+    </div>
     <section class="container-book">
         {% for author in author %}
             <article class="book">
-                <h2>{{ author.firstname }} {{ author.name }}</h2>
+                <h3>{{ author.firstname }} {{ author.name }}</h3>
                 <div class="img-resume-books">
                     <img src="http://placehold.it/400x200" alt="">
-                    <p class="resume">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquam autem dicta dolor, facilis fugiat in nesciunt numquam [...]</p>
+                    <p class="resume">{{ author.biography  | slice(0, 200) | raw }} [...]</p>
                 </div>
                 <a href="{{ path('author', {'id': author.id}) }}" class="btn">En savoir plus</a>
             </article>
         {% endfor %}
     </section>
+    <a href="{{ path('author_create') }}" class="btn add">Créer un nouvel auteur</a>
 
 {% endblock %}

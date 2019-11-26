@@ -13,12 +13,16 @@
             <h1>{% block titrePage %}{% endblock %}</h1>
         </div>
         <nav>
+            <form action="get" id="search-form">
+                <label for="search">Rechercher</label>
+                <input type="text" name="search" id="search">
+            </form>
             <ul>
                 <li>
-                    <a href="{{ path('author_list') }}">Auteurs</a>
+                    <a href="{{ path('author_list') }}">Liste des auteurs</a>
                 </li>
                 <li>
-                    <a href="{{ path('book_list') }}">Livres</a>
+                    <a href="{{ path('book_list') }}">Liste des livres</a>
                 </li>
             </ul>
         </nav>

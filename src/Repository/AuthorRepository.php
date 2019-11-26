@@ -19,6 +19,20 @@ class AuthorRepository extends ServiceEntityRepository
         parent::__construct($registry, Author::class);
     }
 
+    public function getAuthorsByBio($word)
+    {
+        $query = $this->createQueryBuilder('a')
+            ->where('a.biography LIKE :word')
+            // On empêche les injections SQL
+            ->setParameter('word', '%'.$word.'%')
+            // On fait la requête
+            ->getQuery();
+
+        $authors = $query->getResult();
+
+        return $authors;
+    }
+
     // /**
     //  * @return Author[] Returns an array of Author objects
     //  */

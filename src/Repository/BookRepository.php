@@ -19,6 +19,24 @@ class BookRepository extends ServiceEntityRepository
         parent::__construct($registry, Book::class);
     }
 
+    public function getByGenre()
+    {
+        // - Récuperer le query builder (car c'est le query builder qui permet de faire la requete SQL)
+        $queryBuilder = $this->createQueryBuilder('b');
+
+        // - Construire la requete façon SQL, mais en PHP
+        // - Traduire la requête en véritable requête SQL
+        $query = $queryBuilder->select('b')
+                    ->where('b.style = :genre')
+                    ->setParameter('genre', 'roman')
+                    ->getQuery();
+
+        // - Executer la requête SQL en BDD pour récupérer les bons livres
+        $books = $query->getArrayResult();
+
+        return $books;
+    }
+
     // /**
     //  * @return Book[] Returns an array of Book objects
     //  */

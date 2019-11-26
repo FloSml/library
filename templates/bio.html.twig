@@ -1,12 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ author.firstname }} {{ author.name }}{% endblock %}
+{% block title %}Mes auteurs{% endblock %}
 
-{% block titrePage %}{{ author.firstname }} {{ author.name }}{% endblock %}
+{% block titrePage %}Résultat de ma recherche{% endblock %}
 
 {% block content %}
 
     <section class="container-book-show">
+        {% for author in authors %}
             <article class="book-show">
                 <h2>{{ author.firstname }} {{ author.name }}</h2>
                 <div class="img-resume">
@@ -27,6 +28,7 @@
                     <a href="{{ path('author_list') }}" class="btn">Retour à la liste des auteurs</a>
                 </p>
             </article>
+        {% endfor %}
     </section>
 
 {% endblock %}
