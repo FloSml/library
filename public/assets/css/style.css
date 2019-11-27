@@ -51,7 +51,7 @@ nav ul{
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    width: 75%;
+    width: 50%;
 }
 
 nav ul li{
@@ -68,7 +68,6 @@ nav ul li a{
 
 #search-form{
     display: flex;
-
 }
 
 #search-form label{
@@ -79,10 +78,12 @@ nav ul li a{
     margin-left: 10px;
 }
 
-#search-form input::after{
-    content: url("../img/find.png");
+#search-form::after{
+    content: url("../img/find-loop.png");
     height: 20px;
     width: 20px;
+    display: block;
+    margin-left: 10px;
 }
 
 main {
@@ -205,6 +206,15 @@ h3{
 
 .img-resume-books p{
     margin-top: 30px;
+}
+
+.modif{
+    display: flex;
+    justify-content: center;
+}
+
+.modif .btn:first-child{
+    margin-right: 20px;
 }
 
 .btn{

@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Book;
+use App\Form\BookType;
 use App\Repository\BookRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -63,6 +63,23 @@ class BookController extends AbstractController
     }
 
     /**
+     * @Route("/book/update/{id}", name="book_update")
+     */
+    public function updateBook(BookRepository $bookRepository, EntityManagerInterface $entityManager, $id)
+    {
+        // J'utilise le Repository de Book pour récupérer un livre en fonction de son id
+        $book = $bookRepository->find($id);
+
+        // Je donne un nouveau titre à mon livre
+        $book->setTitle('Nouveau titre du livre dont l\'id est le '.$id);
+
+        $entityManager->persist($book);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('book_list');
+    }
+
+    /**
      * @Route("/book/delete/{id}", name="book_delete")
      */
     public function deleteBook(BookRepository $bookRepository, EntityManagerInterface $entityManager, $id)
@@ -103,5 +120,28 @@ class BookController extends AbstractController
         dump($books); die;
         // Cette méthode est censée nous retourner tous les livres en fonction de leur type
         // Elle va donc exécuter une requête SELECT en base de données
+    }
+
+    /**
+     * @Route("/book/insert_form", name="book_insert_form")
+     */
+    public function insertBookForm(EntityManagerInterface $entityManager)
+    {
+        // Je crée un nouveau Book
+        // J'utilise le gabarit de formulaire pour créer mon formulaire
+        // J'envoie mon formulaire à un fichier twig
+        // Je l'affiche
+
+        // Je crée un nouveau Book en créant une nouvelle instance de l'entité Book
+        $book = new Book();
+
+        // J'utilise la méthode creatForm pour créer le gabarit / le constructeur de mon formulaire pour le Book : BookType
+        // (que j'ai généré en ligne de commande et je lui associe mon entité Book vide
+        $bookForm = $this->createForm(BookType::class, $book);
+
+        // A partir de mon gabarit, je crée
+        $bookFormView = $bookForm->createView();
+
+        return $this->render()
     }
 }

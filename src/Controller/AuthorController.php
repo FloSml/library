@@ -57,6 +57,23 @@ class AuthorController extends AbstractController
     }
 
     /**
+     * @Route("/author/update/{id}", name="author_update")
+     */
+    public function updateAuthor(AuthorRepository $authorRepository, EntityManagerInterface $entityManager, $id)
+    {
+        // J'utilise le Repository de Author pour récupérer un livre en fonction de son id
+        $author = $authorRepository->find($id);
+
+        // Je donne un nouveau titre à mon livre
+        $author->setFirstname('Jean Alfred');
+
+        $entityManager->persist($author);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('author_list');
+    }
+
+    /**
      * @Route("/author/delete/{id}", name="author_delete")
      */
     public function deleteAuthor(AuthorRepository $authorRepository, EntityManagerInterface $entityManager, $id)
@@ -70,9 +87,7 @@ class AuthorController extends AbstractController
         // Je valide la suppression en BDD avec la méthode flush()
         $entityManager->flush();
 
-        return $this->render('author-deleted.html.twig', [
-            'author' => $author,
-        ]);
+        return $this->redirectToRoute('author_list');
     }
 
     /**
