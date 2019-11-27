@@ -37,26 +37,41 @@ class AuthorController extends AbstractController
     /**
      * @Route("/author/insert", name="author_insert")
      */
+    // public function est une méthode dans la classe
     public function insertAuthor(EntityManagerInterface $entityManager)
     {
         // On crée un nouveau livre pour l'envoyer dans la table author
         $author = new Author();
-        $authorFirstname = $author->setFirstname('Florian');
-        $authorName = $author->setName('Soumaille');
-        $authorBirthDate = $author->setBirthDate(new \DateTime('03/04/1986'));
-        $authorDeathDate = $author->setDeathDate(null);
-        $authorBiography = $author->setBiography('Cet auteur incompris n\'en est pas à son coup d\'essai cette année.');
+        $author->setFirstname('Florian');
+        $author->setName('Soumaille');
+        $author->setBirthDate(new \DateTime('03/04/1986'));
+        $author->setDeathDate(new \DateTime(null));
+        $author->setBiography('Cet auteur incompris n\'en est pas à son coup d\'essai cette année.');
 
         $entityManager->persist($author);
         $entityManager->flush();
 
         return $this->render('author-insert.html.twig', [
             'author' => $author,
-            'firstname' => $authorFirstname,
-            'name' => $authorName,
-            'birthDate' => $authorBirthDate,
-            'deathDate' => $authorDeathDate,
-            'biography' => $authorBiography,
+        ]);
+    }
+
+    /**
+     * @Route("/author/delete/{id}", name="author_delete")
+     */
+    public function deleteAuthor(AuthorRepository $authorRepository, EntityManagerInterface $entityManager, $id)
+    {
+        // Je récupère un enregistrement en BDD grâce au Repository de Author
+        // $author = Entité Author
+        $author = $authorRepository->find($id);
+
+        // J'utilise l'entityManager avec la méthode remove pour enregistrer la suppression du author dans l'unité de travail
+        $entityManager->remove($author);
+        // Je valide la suppression en BDD avec la méthode flush()
+        $entityManager->flush();
+
+        return $this->render('author-deleted.html.twig', [
+            'author' => $author,
         ]);
     }
 
@@ -76,8 +91,8 @@ class AuthorController extends AbstractController
     /**
      * @Route("/author_by_bio/{word}", name="author_by_bio")
      */
-    // On appelle le BookRepository (en le passant en paramètre de la méthode)
-    // On appelle la méthode qu'on a créé dans le BookRepository ("getAuthorsByBio()")
+    // On appelle le AuthorRepository (en le passant en paramètre de la méthode)
+    // On appelle la méthode qu'on a créé dans le AuthorRepository ("getAuthorsByBio()")
     // Symfony nous permet de faire une instance de la classe AuthorRepository en la passant en paramètre
     // C'est comme si on avait fait un NEW en PHP
     public function getAuthorsByBio(AuthorRepository $authorRepository, $word)

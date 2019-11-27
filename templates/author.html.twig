@@ -18,6 +18,7 @@
                     <p class="resume">{{ author.biography  | slice(0, 200) | raw }} [...]</p>
                 </div>
                 <a href="{{ path('author', {'id': author.id}) }}" class="btn">En savoir plus</a>
+                <a href="{{ path('author_delete', {'id': author.id}) }}" class="btn btn-delete">Supprimer l'auteur</a>
             </article>
         {% endfor %}
     </section>

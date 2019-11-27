@@ -63,7 +63,12 @@ nav ul li a{
     color: #fff;
     text-decoration: none;
     font-weight: bold;
-    font-size: 1.3rem;
+    font-size: 1rem;
+}
+
+#search-form{
+    display: flex;
+
 }
 
 #search-form label{
@@ -71,7 +76,13 @@ nav ul li a{
 }
 
 #search-form input{
-    border-radius: 3px;
+    margin-left: 10px;
+}
+
+#search-form input::after{
+    content: url("../img/find.png");
+    height: 20px;
+    width: 20px;
 }
 
 main {
@@ -94,6 +105,7 @@ main {
     align-items: center;
     justify-content: space-around;
     flex-wrap: wrap;
+    margin-bottom: 30px;
 }
 
 .article-full{
@@ -196,14 +208,14 @@ h3{
 }
 
 .btn{
-    padding: 10px 15px;
-    background-color: #000b31;
-    color: #fff;
-    border-radius: 3px;
-    text-decoration: none;
-    display: block;
-    margin-bottom: 20px;
-}
+     padding: 10px 15px;
+     background-color: #000b31;
+     color: #fff;
+     border-radius: 3px;
+     text-decoration: none;
+     display: block;
+     margin-bottom: 20px;
+ }
 
 .img-resume{
     margin: 30px 0;
