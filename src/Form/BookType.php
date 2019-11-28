@@ -33,7 +33,9 @@ class BookType extends AbstractType
                 ],
                  'label' =>  "Genre",
             ])
-            ->add('inStock')
+            ->add('inStock', CheckboxType::class, [
+                'label' => 'En stock'
+            ])
             ->add('resume', TextareaType::class, [
                 'label' => 'Résumé'
             ])
@@ -41,7 +43,7 @@ class BookType extends AbstractType
                 'label' => 'Ajouter une illustration',
                 'required' => false
             ])
-            ->add('Ajouter', SubmitType::class)
+            ->add('Valider', SubmitType::class)
         ;
     }
 

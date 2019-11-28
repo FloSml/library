@@ -23,15 +23,17 @@ class AuthorType extends AbstractType
                 'label' => "Prénom",
             ])
             ->add('birthDate', DateType::class, [
+                'widget' => 'single_text',
                 'label' => "Date de naissance",
             ])
             ->add('deathDate', DateType::class, [
+                'widget' => 'single_text',
                 'label' => "Date de mort",
             ])
             ->add('biography', TextareaType::class, [
                 'label' => "Biographie",
             ])
-            ->add('Ajouter', SubmitType::class)
+            ->add('Valider', SubmitType::class)
         ;
     }
 

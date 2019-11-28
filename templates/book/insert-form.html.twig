@@ -1,18 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajout d'un livre{% endblock %}
+{% block title %}Ajouter/Modifier un livre{% endblock %}
 
-{% block titrePage %}Ajout d'un livre{% endblock %}
+{% block titrePage %}Ajouter/Modifier un livre{% endblock %}
 
 {% block content %}
 
     <section class="container-full">
         <article class="article-full">
-            <h2>Ajouter un livre</h2>
+            <h2>Ajouter/Modifier un livre</h2>
             <div class="form-add">
                 {# je crée le html de mon formulaire (balise form, input etc) en utilisant la fonction
                 form() avec en parametre ma variable de formulaire  #}
                 {{ form(bookFormView) }}
+                <p class="success">{{ message }}</p>
             </div>
         </article>
     </section>

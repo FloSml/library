@@ -7,13 +7,17 @@ use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AuthorController extends AbstractController
 {
     /**
      * @Route("/author", name="author_list")
+     * @param AuthorRepository $authorRepository
+     * @return Response
      */
     public function author(AuthorRepository $authorRepository)
     {
@@ -26,6 +30,8 @@ class AuthorController extends AbstractController
 
     /**
      * @Route("/author/new", name="author_create")
+     * @param AuthorRepository $authorRepository
+     * @return Response
      */
     public function authorCreate(AuthorRepository $authorRepository)
     {
@@ -38,6 +44,9 @@ class AuthorController extends AbstractController
 
     /**
      * @Route("/author/insert", name="author_insert")
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     * @throws \Exception
      */
     // public function est une méthode dans la classe
     public function insertAuthor(EntityManagerInterface $entityManager)
@@ -60,6 +69,10 @@ class AuthorController extends AbstractController
 
     /**
      * @Route("/author/update/{id}", name="author_update")
+     * @param AuthorRepository $authorRepository
+     * @param EntityManagerInterface $entityManager
+     * @param $id
+     * @return RedirectResponse
      */
     public function updateAuthor(AuthorRepository $authorRepository, EntityManagerInterface $entityManager, $id)
     {
@@ -77,6 +90,10 @@ class AuthorController extends AbstractController
 
     /**
      * @Route("/author/delete/{id}", name="author_delete")
+     * @param AuthorRepository $authorRepository
+     * @param EntityManagerInterface $entityManager
+     * @param $id
+     * @return RedirectResponse
      */
     public function deleteAuthor(AuthorRepository $authorRepository, EntityManagerInterface $entityManager, $id)
     {
@@ -95,6 +112,9 @@ class AuthorController extends AbstractController
     // On crée une annotation @Route à laquelle on donne un nom pour
     /**
      * @Route("/author_by_bio/{word}", name="author_by_bio")
+     * @param AuthorRepository $authorRepository
+     * @param $word
+     * @return Response
      */
     // On appelle le AuthorRepository (en le passant en paramètre de la méthode)
     // On appelle la méthode qu'on a créé dans le AuthorRepository ("getAuthorsByBio()")
@@ -113,6 +133,9 @@ class AuthorController extends AbstractController
 
     /**
      * @Route("/author/insert_form", name="author_insert_form")
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return Response
      */
     public function insertAuthorForm(Request $request, EntityManagerInterface $entityManager)
     {
@@ -120,6 +143,9 @@ class AuthorController extends AbstractController
         // j'envoie mon formulaire à un fichier twig et je l'affiche
         // je crée un nouveau Author en créant une nouvelle instance de l'entité Author
         $author = new Author();
+
+        $message = "";
+
         // J'utilise la méthode createForm pour créer le gabarit / le constructeur de
         // formulaire pour le Author : AuthorType (que j'ai généré en ligne de commandes)
         // Et je lui associe mon entité Author vide
@@ -133,6 +159,7 @@ class AuthorController extends AbstractController
             // (que les types rentrés dans les inputs sont bons,
             // que tous les champs obligatoires sont remplis etc)
             if ($authorForm->isValid()) {
+                $message = "L'auteur a bien été ajouté/modifié !";
                 // J'enregistre en BDD ma variable $author
                 // qui n'est plus vide, car elle a été remplie
                 // avec les données du formulaire
@@ -145,12 +172,48 @@ class AuthorController extends AbstractController
         // je retourne un fichier twig, et je lui envoie ma variable qui contient
         // mon formulaire
         return $this->render('author/insert-form.html.twig', [
-            'authorFormView' => $authorFormView
+            'authorFormView' => $authorFormView,
+            'message' => $message,
+        ]);
+    }
+
+    /**
+     * @Route("/author/update_form/{id}", name="author_update_form")
+     * @param AuthorRepository $authorRepository
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param $id
+     * @return Response
+     */
+    public function updateAuthorForm(AuthorRepository $authorRepository, Request $request, EntityManagerInterface $entityManager, $id)
+    {
+        $author = $authorRepository->find($id);
+        $message= "";
+
+        // permet de générer un livre avec toutes ses infos préenregistrées
+        $authorForm = $this->createForm(AuthorType::class, $author);
+
+        if ($request->isMethod('Post')) {
+
+            $authorForm->handleRequest($request);
+            if ($authorForm->isValid()) {
+                $message = "L'auteur a bien été ajouté/modifié !";
+                $entityManager->persist($author);
+                $entityManager->flush();
+            }
+        }
+        $authorFormView = $authorForm->createView();
+        return $this->render('author/insert-form.html.twig', [
+            'authorFormView' => $authorFormView,
+            'message' => $message,
         ]);
     }
 
     /**
      * @Route("/author/{id}", name="author")
+     * @param AuthorRepository $authorRepository
+     * @param $id
+     * @return Response
      */
     public function authorShow(AuthorRepository $authorRepository, $id)
     {

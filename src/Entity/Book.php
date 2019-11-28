@@ -32,7 +32,7 @@ class Book
     private $style;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="boolean")
      */
     private $inStock;
 
@@ -87,12 +87,12 @@ class Book
         return $this;
     }
 
-    public function getInStock(): ?string
+    public function getInStock(): ?bool
     {
         return $this->inStock;
     }
 
-    public function setInStock(string $inStock): self
+    public function setInStock(bool $inStock): self
     {
         $this->inStock = $inStock;
 

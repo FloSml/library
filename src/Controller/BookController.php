@@ -9,12 +9,15 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class BookController extends AbstractController
 {
     /**
      * @Route("/book", name="book_list")
+     * @param BookRepository $bookRepository
+     * @return Response
      */
     public function book(BookRepository $bookRepository)
     {
@@ -29,6 +32,8 @@ class BookController extends AbstractController
 
     /**
      * @Route("/book/new", name="book_create")
+     * @param BookRepository $bookRepository
+     * @return Response
      */
     public function bookCreate(BookRepository $bookRepository)
     {
@@ -41,6 +46,8 @@ class BookController extends AbstractController
 
     /**
      * @Route("/book/insert", name="book_insert")
+     * @param EntityManagerInterface $entityManager
+     * @return Response
      */
     public function insertBook(EntityManagerInterface $entityManager)
     {
@@ -66,6 +73,10 @@ class BookController extends AbstractController
 
     /**
      * @Route("/book/update/{id}", name="book_update")
+     * @param BookRepository $bookRepository
+     * @param EntityManagerInterface $entityManager
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function updateBook(BookRepository $bookRepository, EntityManagerInterface $entityManager, $id)
     {
@@ -83,6 +94,10 @@ class BookController extends AbstractController
 
     /**
      * @Route("/book/delete/{id}", name="book_delete")
+     * @param BookRepository $bookRepository
+     * @param EntityManagerInterface $entityManager
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteBook(BookRepository $bookRepository, EntityManagerInterface $entityManager, $id)
     {
@@ -100,6 +115,7 @@ class BookController extends AbstractController
 
     /**
      * @Route("/book_by_genre", name="book_by_genre")
+     * @param BookRepository $bookRepository
      */
     // On appelle le BookRepository (en le passant en paramètre de la méthode)
     // On appelle la méthode qu'on a créé dans le BookRepository ("getByGenre()")
@@ -114,6 +130,9 @@ class BookController extends AbstractController
 
     /**
      * @Route("/book/insert_form", name="book_insert_form")
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return Response
      */
     public function insertBookForm(Request $request, EntityManagerInterface $entityManager)
     {
@@ -121,6 +140,9 @@ class BookController extends AbstractController
         // j'envoie mon formulaire à un fichier twig et je l'affiche
         // je crée un nouveau Book en créant une nouvelle instance de l'entité Book
         $book = new Book();
+
+        $message= "";
+
         // J'utilise la méthode createForm pour créer le gabarit / le constructeur de
         // formulaire pour le Book : BookType (que j'ai généré en ligne de commandes)
         // Et je lui associe mon entité Book vide
@@ -134,6 +156,7 @@ class BookController extends AbstractController
             // (que les types rentrés dans les inputs sont bons,
             // que tous les champs obligatoires sont remplis etc)
             if ($bookForm->isValid()) {
+                $message = "Le livre a bien été ajouté/modifié !";
                 // J'enregistre en BDD ma variable $book
                 // qui n'est plus vide, car elle a été remplie
                 // avec les données du formulaire
@@ -146,16 +169,23 @@ class BookController extends AbstractController
         // je retourne un fichier twig, et je lui envoie ma variable qui contient
         // mon formulaire
         return $this->render('book/insert-form.html.twig', [
-            'bookFormView' => $bookFormView
+            'bookFormView' => $bookFormView,
+            'message' => $message,
         ]);
     }
 
     /**
      * @Route("/book/update_form/{id}", name="book_update_form")
+     * @param BookRepository $bookRepository
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param $id
+     * @return Response
      */
     public function updateBookForm(BookRepository $bookRepository, Request $request, EntityManagerInterface $entityManager, $id)
     {
         $book = $bookRepository->find($id);
+        $message= "";
 
         // permet de générer un livre avec toutes ses infos préenregistrées
         $bookForm = $this->createForm(BookType::class, $book);
@@ -164,18 +194,24 @@ class BookController extends AbstractController
 
             $bookForm->handleRequest($request);
             if ($bookForm->isValid()) {
+                $message = ('Le livre a bien été ajouté/modifié !');
                 $entityManager->persist($book);
                 $entityManager->flush();
             }
         }
+
         $bookFormView = $bookForm->createView();
         return $this->render('book/insert-form.html.twig', [
-            'bookFormView' => $bookFormView
+            'bookFormView' => $bookFormView,
+            'message' => $message,
         ]);
     }
 
     /**
      * @Route("/book/{id}", name="book")
+     * @param BookRepository $bookRepository
+     * @param $id
+     * @return Response
      */
     public function bookShow(BookRepository $bookRepository, $id)
     {

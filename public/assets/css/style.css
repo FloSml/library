@@ -281,7 +281,7 @@ h3{
     justify-content: flex-start;
 }
 
-#book div:last-of-type, #author div:last-of-type{
+#book div:last-of-type, #author>div:last-of-type{
     margin-top: 30px;
     justify-content: center;
 }
@@ -292,7 +292,7 @@ h3{
     min-width: 200px;
 }
 
-#book_Ajouter, #author_Ajouter{
+#book_Valider, #author_Valider{
     padding: 8px 30px;
     border: solid 1px #000b31;
     background-color: #000b31;
@@ -302,14 +302,19 @@ h3{
     transition: all .5s ease;
 }
 
-#book_Ajouter:hover, #author_Ajouter:hover{
+#book_Valider:hover, #author_Valider:hover{
     border: solid 1px #000b31;
     background-color: #fff;
     color: #000b31;
 }
 
-#author_birthDate{
-    margin: 0;
+#author_birthDate, #author_deathDate{
+    margin: 0 !important;
+}
+
+.success{
+    text-align: center;
+    color: #718C00;
 }
 
 footer {
