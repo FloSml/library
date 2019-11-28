@@ -31,6 +31,22 @@ class BookController extends AbstractController
     }
 
     /**
+     * @Route("/admin/book", name="admin_book_list")
+     * @param BookRepository $bookRepository
+     * @return Response
+     */
+    public function bookAdmin(BookRepository $bookRepository)
+    {
+        // On utilise le repository de book pour pouvoir sélectionner tous mes éléments de ma table book
+        // Les repository permettent de faire les requêtes SELECT dans les tables de la BDD (find, findAll, ...)
+        $book = $bookRepository->findAll();
+
+        return $this->render('admin/book/book.html.twig', [
+            'book' => $book,
+        ]);
+    }
+
+    /**
      * @Route("/admin/book/new", name="admin_book_create")
      * @param BookRepository $bookRepository
      * @return Response
