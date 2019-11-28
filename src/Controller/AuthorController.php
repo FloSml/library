@@ -15,6 +15,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class AuthorController extends AbstractController
 {
     /**
+     * @Route("/", name="index")
+     * @param AuthorRepository $authorRepository
+     * @return Response
+     */
+    public function index(AuthorRepository $authorRepository)
+    {
+        $author = $authorRepository->findAll();
+
+        return $this->render('author/author.html.twig', [
+            'author' => $author,
+        ]);
+    }
+
+    /**
      * @Route("/author", name="author_list")
      * @param AuthorRepository $authorRepository
      * @return Response
@@ -29,21 +43,7 @@ class AuthorController extends AbstractController
     }
 
     /**
-     * @Route("/author/new", name="author_create")
-     * @param AuthorRepository $authorRepository
-     * @return Response
-     */
-    public function authorCreate(AuthorRepository $authorRepository)
-    {
-        $author = $authorRepository->findAll();
-
-        return $this->render('author/author-create.html.twig', [
-            'author' => $author,
-        ]);
-    }
-
-    /**
-     * @Route("/author/insert", name="author_insert")
+     * @Route("/admin/author/insert", name="admin_author_insert")
      * @param EntityManagerInterface $entityManager
      * @return Response
      * @throws \Exception
@@ -62,13 +62,13 @@ class AuthorController extends AbstractController
         $entityManager->persist($author);
         $entityManager->flush();
 
-        return $this->render('author/author-insert.html.twig', [
+        return $this->render('admin/author/author-insert.html.twig', [
             'author' => $author,
         ]);
     }
 
     /**
-     * @Route("/author/update/{id}", name="author_update")
+     * @Route("/admin/author/update/{id}", name="admin_author_update")
      * @param AuthorRepository $authorRepository
      * @param EntityManagerInterface $entityManager
      * @param $id
@@ -89,7 +89,7 @@ class AuthorController extends AbstractController
     }
 
     /**
-     * @Route("/author/delete/{id}", name="author_delete")
+     * @Route("/admin/author/delete/{id}", name="admin_author_delete")
      * @param AuthorRepository $authorRepository
      * @param EntityManagerInterface $entityManager
      * @param $id
@@ -132,7 +132,7 @@ class AuthorController extends AbstractController
     }
 
     /**
-     * @Route("/author/insert_form", name="author_insert_form")
+     * @Route("/admin/author/insert_form", name="admin_author_insert_form")
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return Response
@@ -171,14 +171,14 @@ class AuthorController extends AbstractController
         $authorFormView = $authorForm->createView();
         // je retourne un fichier twig, et je lui envoie ma variable qui contient
         // mon formulaire
-        return $this->render('author/insert-form.html.twig', [
+        return $this->render('admin/author/author-insert-form.html.twig', [
             'authorFormView' => $authorFormView,
             'message' => $message,
         ]);
     }
 
     /**
-     * @Route("/author/update_form/{id}", name="author_update_form")
+     * @Route("/admin/author/update_form/{id}", name="admin_author_update_form")
      * @param AuthorRepository $authorRepository
      * @param Request $request
      * @param EntityManagerInterface $entityManager
@@ -203,7 +203,7 @@ class AuthorController extends AbstractController
             }
         }
         $authorFormView = $authorForm->createView();
-        return $this->render('author/insert-form.html.twig', [
+        return $this->render('admin/author/author-insert-form.html.twig', [
             'authorFormView' => $authorFormView,
             'message' => $message,
         ]);

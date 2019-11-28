@@ -31,7 +31,7 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/book/new", name="book_create")
+     * @Route("/admin/book/new", name="admin_book_create")
      * @param BookRepository $bookRepository
      * @return Response
      */
@@ -39,13 +39,13 @@ class BookController extends AbstractController
     {
         $book = $bookRepository->findAll();
 
-        return $this->render('book/book-create.html.twig', [
+        return $this->render('admin/book/book-create.html.twig', [
             'book' => $book,
         ]);
     }
 
     /**
-     * @Route("/book/insert", name="book_insert")
+     * @Route("/admin/book/insert", name="admin_book_insert")
      * @param EntityManagerInterface $entityManager
      * @return Response
      */
@@ -66,13 +66,13 @@ class BookController extends AbstractController
         // Le flush envoie les informations à la BDD
         $entityManager->flush();
 
-        return $this->render('book/book-insert.html.twig', [
+        return $this->render('admin/book/book-insert.html.twig', [
             'book' => $book,
         ]);
     }
 
     /**
-     * @Route("/book/update/{id}", name="book_update")
+     * @Route("/admin/book/update/{id}", name="admin_book_update")
      * @param BookRepository $bookRepository
      * @param EntityManagerInterface $entityManager
      * @param $id
@@ -93,7 +93,7 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/book/delete/{id}", name="book_delete")
+     * @Route("/admin/book/delete/{id}", name="admin_book_delete")
      * @param BookRepository $bookRepository
      * @param EntityManagerInterface $entityManager
      * @param $id
@@ -129,7 +129,7 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/book/insert_form", name="book_insert_form")
+     * @Route("/admin/book/insert_form", name="admin_book_insert_form")
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return Response
@@ -168,14 +168,14 @@ class BookController extends AbstractController
         $bookFormView = $bookForm->createView();
         // je retourne un fichier twig, et je lui envoie ma variable qui contient
         // mon formulaire
-        return $this->render('book/insert-form.html.twig', [
+        return $this->render('admin/book/book-insert-form.html.twig', [
             'bookFormView' => $bookFormView,
             'message' => $message,
         ]);
     }
 
     /**
-     * @Route("/book/update_form/{id}", name="book_update_form")
+     * @Route("/admin/book/update_form/{id}", name="admin_book_update_form")
      * @param BookRepository $bookRepository
      * @param Request $request
      * @param EntityManagerInterface $entityManager
@@ -201,7 +201,7 @@ class BookController extends AbstractController
         }
 
         $bookFormView = $bookForm->createView();
-        return $this->render('book/insert-form.html.twig', [
+        return $this->render('admin/book/book-insert-form.html.twig', [
             'bookFormView' => $bookFormView,
             'message' => $message,
         ]);
