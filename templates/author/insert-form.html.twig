@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout d'un auteur{% endblock %}
+
+{% block titrePage %}Ajout d'un auteur{% endblock %}
+
+{% block content %}
+
+    <section class="container-full">
+        <article class="article-full">
+            <h2>Ajouter un auteur</h2>
+            <div class="form-add">
+                {# je crée le html de mon formulaire (balise form, input etc) en utilisant la fonction
+                form() avec en parametre ma variable de formulaire  #}
+                {{ form(authorFormView) }}
+            </div>
+        </article>
+    </section>
+
+{% endblock %}

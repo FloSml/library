@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Book;
 use App\Form\BookType;
 use App\Repository\BookRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class BookController extends AbstractController
@@ -20,7 +22,7 @@ class BookController extends AbstractController
         // Les repository permettent de faire les requêtes SELECT dans les tables de la BDD (find, findAll, ...)
         $book = $bookRepository->findAll();
 
-        return $this->render('book.html.twig', [
+        return $this->render('book/book.html.twig', [
             'book' => $book,
         ]);
     }
@@ -32,7 +34,7 @@ class BookController extends AbstractController
     {
         $book = $bookRepository->findAll();
 
-        return $this->render('book-create.html.twig', [
+        return $this->render('book/book-create.html.twig', [
             'book' => $book,
         ]);
     }
@@ -57,7 +59,7 @@ class BookController extends AbstractController
         // Le flush envoie les informations à la BDD
         $entityManager->flush();
 
-        return $this->render('book-insert.html.twig', [
+        return $this->render('book/book-insert.html.twig', [
             'book' => $book,
         ]);
     }
@@ -97,18 +99,6 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/book/{id}", name="book")
-     */
-    public function bookShow(BookRepository $bookRepository, $id)
-    {
-        $book = $bookRepository->find($id);
-
-        return $this->render('book-show.html.twig', [
-            'book' => $book,
-        ]);
-    }
-
-    /**
      * @Route("/book_by_genre", name="book_by_genre")
      */
     // On appelle le BookRepository (en le passant en paramètre de la méthode)
@@ -125,23 +115,75 @@ class BookController extends AbstractController
     /**
      * @Route("/book/insert_form", name="book_insert_form")
      */
-    public function insertBookForm(EntityManagerInterface $entityManager)
+    public function insertBookForm(Request $request, EntityManagerInterface $entityManager)
     {
-        // Je crée un nouveau Book
         // J'utilise le gabarit de formulaire pour créer mon formulaire
-        // J'envoie mon formulaire à un fichier twig
-        // Je l'affiche
-
-        // Je crée un nouveau Book en créant une nouvelle instance de l'entité Book
+        // j'envoie mon formulaire à un fichier twig et je l'affiche
+        // je crée un nouveau Book en créant une nouvelle instance de l'entité Book
         $book = new Book();
+        // J'utilise la méthode createForm pour créer le gabarit / le constructeur de
+        // formulaire pour le Book : BookType (que j'ai généré en ligne de commandes)
+        // Et je lui associe mon entité Book vide
+        $bookForm = $this->createForm(BookType::class, $book);
+        // Si je suis sur une méthode POST, donc qu'un formulaire a été envoyé
+        if ($request->isMethod('Post')) {
+            // Je récupère les données de la requête (POST)
+            // et je les associe à mon formulaire
+            $bookForm->handleRequest($request);
+            // Si les données de mon formulaire sont valides
+            // (que les types rentrés dans les inputs sont bons,
+            // que tous les champs obligatoires sont remplis etc)
+            if ($bookForm->isValid()) {
+                // J'enregistre en BDD ma variable $book
+                // qui n'est plus vide, car elle a été remplie
+                // avec les données du formulaire
+                $entityManager->persist($book);
+                $entityManager->flush();
+            }
+        }
+        // à partir de mon gabarit, je crée la vue de mon formulaire
+        $bookFormView = $bookForm->createView();
+        // je retourne un fichier twig, et je lui envoie ma variable qui contient
+        // mon formulaire
+        return $this->render('book/insert-form.html.twig', [
+            'bookFormView' => $bookFormView
+        ]);
+    }
 
-        // J'utilise la méthode creatForm pour créer le gabarit / le constructeur de mon formulaire pour le Book : BookType
-        // (que j'ai généré en ligne de commande et je lui associe mon entité Book vide
+    /**
+     * @Route("/book/update_form/{id}", name="book_update_form")
+     */
+    public function updateBookForm(BookRepository $bookRepository, Request $request, EntityManagerInterface $entityManager, $id)
+    {
+        $book = $bookRepository->find($id);
+
+        // permet de générer un livre avec toutes ses infos préenregistrées
         $bookForm = $this->createForm(BookType::class, $book);
 
-        // A partir de mon gabarit, je crée
-        $bookFormView = $bookForm->createView();
+        if ($request->isMethod('Post')) {
 
-        return $this->render()
+            $bookForm->handleRequest($request);
+            if ($bookForm->isValid()) {
+                $entityManager->persist($book);
+                $entityManager->flush();
+            }
+        }
+        $bookFormView = $bookForm->createView();
+        return $this->render('book/insert-form.html.twig', [
+            'bookFormView' => $bookFormView
+        ]);
     }
+
+    /**
+     * @Route("/book/{id}", name="book")
+     */
+    public function bookShow(BookRepository $bookRepository, $id)
+    {
+        $book = $bookRepository->find($id);
+
+        return $this->render('book/book-show.html.twig', [
+            'book' => $book,
+        ]);
+    }
+
 }

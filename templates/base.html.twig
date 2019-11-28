@@ -20,8 +20,14 @@
                 <li>
                     <a href="{{ path('author_list') }}">Liste des auteurs</a>
                 </li>
+                <li class="li-plus">
+                    <a href="{{ path('author_insert_form') }}"><img src="{{ asset('assets/img/plus.png') }}" alt="Ajouter un auteur" title="Ajouter un auteur" class="plus"></a>
+                </li>
                 <li>
                     <a href="{{ path('book_list') }}">Liste des livres</a>
+                </li>
+                <li class="li-plus">
+                    <a href="{{ path('book_insert_form') }}"><img src="{{ asset('assets/img/plus.png') }}" alt="Ajouter un livre" title="Ajouter un livre" class="plus"></a>
                 </li>
             </ul>
         </nav>
