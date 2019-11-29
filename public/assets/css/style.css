@@ -9,11 +9,6 @@ body {
     color: #313131;
 }
 
-/*main{
-    background-image: url("../img/bg.jpg");
-    background-repeat: repeat-y;
-}*/
-
 header {
     height: 200px;
     display: flex;

@@ -7,7 +7,11 @@
     <section class="container-book-show">
             <article class="book-show">
                 <h2>{{ book.title }}</h2>
-                <p class="auteur">par {{ book.author }}</p>
+                {% if book.author is not null %}
+                    <p class="auteur">{{ book.author.firstname }} {{ book.author.name }}</p>
+                {% else %}
+                    <p class="auteur">Auteur non renseigné</p>
+                {% endif %}
                 <div class="img-resume">
                     <img src="http://placehold.it/250x320" alt="">
                     <h3>Résumé du livre</h3>

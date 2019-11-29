@@ -42,7 +42,7 @@ class Book
     private $image;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Author", inversedBy="book")
      */
     private $author;
 
@@ -116,16 +116,20 @@ class Book
         return $this;
     }
 
-    public function getAuthor(): ?string
+    /**
+     * @return mixed
+     */
+    public function getAuthor()
     {
         return $this->author;
     }
 
-    public function setAuthor(?string $author): self
+    /**
+     * @param mixed $author
+     */
+    public function setAuthor($author): void
     {
         $this->author = $author;
-
-        return $this;
     }
 
     public function getInStock(): ?bool

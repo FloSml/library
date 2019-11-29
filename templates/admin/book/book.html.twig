@@ -11,6 +11,11 @@
         {% for book in book %}
             <article class="book">
                 <h3>{{ book.title }}</h3>
+                {% if book.author is not null %}
+                    <p class="auteur">{{ book.author.firstname }} {{ book.author.name }}</p>
+                {% else %}
+                    <p class="auteur">Auteur non renseigné</p>
+                {% endif %}
                 <div class="img-resume-books">
                     <img src="http://placehold.it/400x200" alt="">
                     <p class="resume">{{ book.resume  | slice(0, 200) | raw }} [...]</p>

@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Author;
 use App\Entity\Book;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -22,8 +24,23 @@ class BookType extends AbstractType
             ->add('title', TextType::class, [
                 'label' => "Titre",
             ])
-            ->add('author', TextType::class, [
-                'label' => 'Auteur'
+            // Je créé un nouveau champs de formulaire
+            // ce champs est pour la propriété 'author'
+            // vu que ce champs contient une relation vers
+            // une autre entité, le type choisi doit être
+            // EntityType
+            ->add('author', EntityType::class, [
+                // je sélectionne l'entité à afficher, ici
+                // Author car ma relation fait référence aux auteurs
+                'class' => Author::class,
+                // je choisi la propriété d'Author qui s'affiche
+                // dans le select du html
+                'choice_label' => function(Author $author){
+                    return $author->getFirstname().' '.$author->getName();
+                },
+                'label' => 'Auteur',
+                'placeholder' => 'Choisir un auteur',
+                'required' => false
             ])
             ->add('nbPages', IntegerType::class, [
                 'label' =>  "Nombre de pages",
@@ -37,7 +54,8 @@ class BookType extends AbstractType
                  'label' =>  "Genre",
             ])
             ->add('inStock', CheckboxType::class, [
-                'label' => 'En stock'
+                'label' => 'En stock',
+                'required' => false
             ])
             ->add('resume', TextareaType::class, [
                 'label' => 'Résumé'

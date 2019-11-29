@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -40,6 +41,16 @@ class Author
      * @ORM\Column(type="text")
      */
     private $biography;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Book", mappedBy="author")
+     */
+    private $book;
+
+    public function __construct()
+    {
+        $this->book = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -104,5 +115,18 @@ class Author
         $this->biography = $biography;
 
         return $this;
+    }
+
+    public function getBook()
+    {
+        return $this->book;
+    }
+
+    /**
+     * @param ArrayCollection $book
+     */
+    public function setBook(ArrayCollection $book): void
+    {
+        $this->book = $book;
     }
 }
