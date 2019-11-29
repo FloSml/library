@@ -22,6 +22,9 @@ class BookType extends AbstractType
             ->add('title', TextType::class, [
                 'label' => "Titre",
             ])
+            ->add('author', TextType::class, [
+                'label' => 'Auteur'
+            ])
             ->add('nbPages', IntegerType::class, [
                 'label' =>  "Nombre de pages",
             ])

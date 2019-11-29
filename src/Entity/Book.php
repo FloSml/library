@@ -32,11 +32,6 @@ class Book
     private $style;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $inStock;
-
-    /**
      * @ORM\Column(type="text")
      */
     private $resume;
@@ -45,6 +40,16 @@ class Book
      * @ORM\Column(type="string", length=500, nullable=true)
      */
     private $image;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $author;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $inStock;
 
     public function getId(): ?int
     {
@@ -87,18 +92,6 @@ class Book
         return $this;
     }
 
-    public function getInStock(): ?bool
-    {
-        return $this->inStock;
-    }
-
-    public function setInStock(bool $inStock): self
-    {
-        $this->inStock = $inStock;
-
-        return $this;
-    }
-
     public function getResume(): ?string
     {
         return $this->resume;
@@ -122,4 +115,29 @@ class Book
 
         return $this;
     }
+
+    public function getAuthor(): ?string
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?string $author): self
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    public function getInStock(): ?bool
+    {
+        return $this->inStock;
+    }
+
+    public function setInStock(?bool $inStock): self
+    {
+        $this->inStock = $inStock;
+
+        return $this;
+    }
+
 }
