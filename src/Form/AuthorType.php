@@ -29,6 +29,7 @@ class AuthorType extends AbstractType
             ->add('deathDate', DateType::class, [
                 'widget' => 'single_text',
                 'label' => "Date de mort",
+                'required' => false,
             ])
             ->add('biography', TextareaType::class, [
                 'label' => "Biographie",

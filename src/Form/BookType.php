@@ -24,11 +24,8 @@ class BookType extends AbstractType
             ->add('title', TextType::class, [
                 'label' => "Titre",
             ])
-            // Je créé un nouveau champs de formulaire
-            // ce champs est pour la propriété 'author'
-            // vu que ce champs contient une relation vers
-            // une autre entité, le type choisi doit être
-            // EntityType
+            // Je créé un nouveau champs de formulaire, ce champs est pour la propriété 'author'
+            // vu que ce champs contient une relation vers une autre entité, le type choisi doit être EntityType
             ->add('author', EntityType::class, [
                 // je sélectionne l'entité à afficher, ici
                 // Author car ma relation fait référence aux auteurs

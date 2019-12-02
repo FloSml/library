@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BookRepository")
@@ -18,6 +20,8 @@ class Book
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=2, max=100, minMessage="Le titre doit au moins comporter 2 caractères", maxMessage="Le titre ne doit pas comporter plus de 100 caractères")
+     * @UniqueEntity("title")
      */
     private $title;
 
