@@ -36,7 +36,7 @@ class BookType extends AbstractType
                     return $author->getFirstname().' '.$author->getName();
                 },
                 'label' => 'Auteur',
-                'placeholder' => 'Choisir un auteur',
+                'placeholder' => 'Choisissez un auteur',
                 'required' => false
             ])
             ->add('nbPages', IntegerType::class, [

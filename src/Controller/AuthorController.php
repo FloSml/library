@@ -99,7 +99,7 @@ class AuthorController extends AbstractController
         $entityManager->persist($author);
         $entityManager->flush();
 
-        return $this->redirectToRoute('author_list');
+        return $this->redirectToRoute('admin_author_list');
     }
 
     /**
@@ -120,7 +120,7 @@ class AuthorController extends AbstractController
         // Je valide la suppression en BDD avec la méthode flush()
         $entityManager->flush();
 
-        return $this->redirectToRoute('author_list');
+        return $this->redirectToRoute('admin_author_list');
     }
 
     // On crée une annotation @Route à laquelle on donne un nom pour

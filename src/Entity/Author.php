@@ -20,22 +20,35 @@ class Author
 
     /**
      * @ORM\Column(type="string", length=255)
-     *
+     * @Assert\Length(max=100, maxMessage="Le nom ne peut pas dépasser les 100 caractères")
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Votre nom ne peut pas contenir de valeurs numériques"
+     * )
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(max=100, maxMessage="Le prénom ne peut pas dépasser les 100 caractères")
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Votre prénom ne peut pas contenir de valeurs numériques"
+     * )
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\LessThan("today")
      */
     private $birthDate;
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Assert\LessThan("today")
      */
     private $deathDate;
 

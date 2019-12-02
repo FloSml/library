@@ -117,7 +117,7 @@ class BookController extends AbstractController
         $entityManager->persist($book);
         $entityManager->flush();
 
-        return $this->redirectToRoute('book_list');
+        return $this->redirectToRoute('admin_book_list');
     }
 
     /**
@@ -138,7 +138,7 @@ class BookController extends AbstractController
         // Je valide la suppression en BDD avec la méthode flush()
         $entityManager->flush();
 
-        return $this->redirectToRoute('book_list');
+        return $this->redirectToRoute('admin_book_list');
     }
 
     /**

@@ -7,12 +7,62 @@
     <section class="container-full">
         <article class="article-full">
             <h2>Ajouter/Modifier un livre</h2>
-            <div class="form-add">
+            <p class="success">{{ message }}</p>
                 {# je crée le html de mon formulaire (balise form, input etc) en utilisant la fonction
                 form() avec en parametre ma variable de formulaire  #}
-                {{ form(bookFormView) }}
-                <p class="success">{{ message }}</p>
-            </div>
+                {#{{ form(bookFormView) }}#}
+
+                    {# j'utilise la fonction form_start pour insérer la balise form #}
+                    {# j'utilise le parametre 'attr' pour pouvoir attribuer une classe css #}
+                    {{ form_start(bookFormView, { 'attr': {'class': 'form-add'} }) }}
+
+                    {# j'utilise les fonctions form_errors, form_label et form_widget
+                     pour afficher respectivement les erreurs, le label et l'input pour
+                     mon champs title #}
+
+                    <div class="form-display">
+                        {{ form_label(bookFormView.title) }}
+                        {{ form_widget(bookFormView.title, { 'attr': {'class': 'form-widget'} }) }}
+                        {{ form_errors(bookFormView.title) }}
+                    </div>
+                    <div class="form-display">
+                        {{ form_label(bookFormView.author) }}
+                        {{ form_widget(bookFormView.author, { 'attr': {'class': 'form-widget'} }) }}
+                        {{ form_errors(bookFormView.author) }}
+                    </div>
+                    <div class="form-display">
+                        {{ form_label(bookFormView.style) }}
+                        {{ form_widget(bookFormView.style, { 'attr': {'class': 'form-widget'} }) }}
+                        {{ form_errors(bookFormView.style) }}
+                    </div>
+                    <div class="form-display">
+                        {{ form_label(bookFormView.resume) }}
+                        {{ form_widget(bookFormView.resume, { 'attr': {'class': 'form-widget'} }) }}
+                        {{ form_errors(bookFormView.resume) }}
+                    </div>
+                    <div class="form-display">
+                        {{ form_label(bookFormView.nbPages) }}
+                        {{ form_widget(bookFormView.nbPages, { 'attr': {'class': 'form-widget'} }) }}
+                        {{ form_errors(bookFormView.nbPages) }}
+                    </div>
+                    <div class="form-display">
+                        {{ form_label(bookFormView.inStock) }}
+                        {{ form_widget(bookFormView.inStock) }}
+                        {{ form_errors(bookFormView.inStock) }}
+                    </div>
+                    <div class="form-display">
+                        {{ form_label(bookFormView.image) }}
+                        {{ form_widget(bookFormView.image) }}
+                        {{ form_errors(bookFormView.image) }}
+                    </div>
+                    <div class="form-validation">
+                        {{ form_label(bookFormView.Valider) }}
+                        {{ form_widget(bookFormView.Valider) }}
+                    </div>
+
+                    {# j'utilise la fonction form_end pour insérer la fermeture de la balise form #}
+
+                    {{ form_end(bookFormView) }}
         </article>
     </section>
 

@@ -7,12 +7,52 @@
     <section class="container-full">
         <article class="article-full">
             <h2>Ajouter/Modifier un auteur</h2>
-            <div class="form-add">
+                <p class="success">{{ message }}</p>
                 {# je crée le html de mon formulaire (balise form, input etc) en utilisant la fonction
                 form() avec en parametre ma variable de formulaire  #}
-                {{ form(authorFormView) }}
-                <p class="success">{{ message }}</p>
-            </div>
+                {#{{ form(authorFormView) }}#}
+
+                {# j'utilise la fonction form_start pour insérer la balise form #}
+                {# j'utilise le parametre 'attr' pour pouvoir attribuer une classe css #}
+                {{ form_start(authorFormView, { 'attr': {'class': 'form-add'} }) }}
+
+                {# j'utilise les fonctions form_errors, form_label et form_widget
+                 pour afficher respectivement les erreurs, le label et l'input pour
+                 mon champs title #}
+
+                <div class="form-display">
+                    {{ form_label(authorFormView.firstname) }}
+                    {{ form_widget(authorFormView.firstname, { 'attr': {'class': 'form-widget'} }) }}
+                    {{ form_errors(authorFormView.firstname) }}
+                </div>
+                <div class="form-display">
+                    {{ form_label(authorFormView.name) }}
+                    {{ form_widget(authorFormView.name, { 'attr': {'class': 'form-widget'} }) }}
+                    {{ form_errors(authorFormView.name) }}
+                </div>
+                <div class="form-display">
+                    {{ form_label(authorFormView.birthDate) }}
+                    {{ form_widget(authorFormView.birthDate, { 'attr': {'class': 'form-widget'} }) }}
+                    {{ form_errors(authorFormView.birthDate) }}
+                </div>
+                <div class="form-display">
+                    {{ form_label(authorFormView.deathDate) }}
+                    {{ form_widget(authorFormView.deathDate, { 'attr': {'class': 'form-widget'} }) }}
+                    {{ form_errors(authorFormView.deathDate) }}
+                </div>
+                <div class="form-display">
+                    {{ form_label(authorFormView.biography) }}
+                    {{ form_widget(authorFormView.biography, { 'attr': {'class': 'form-widget'} }) }}
+                    {{ form_errors(authorFormView.biography) }}
+                </div>
+                <div class="form-validation">
+                    {{ form_label(authorFormView.Valider) }}
+                    {{ form_widget(authorFormView.Valider) }}
+                </div>
+
+                {# j'utilise la fonction form_end pour insérer la fermeture de la balise form #}
+
+                {{ form_end(authorFormView) }}
         </article>
     </section>
 
