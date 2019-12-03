@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ author.firstname }} {{ author.name }}{% endblock %}
+
+{% block content %}
+
+    <section class="container-book-show">
+            <article class="book-show">
+                <h2>{{ author.firstname }} {{ author.name }}</h2>
+                <div class="img-resume">
+                    <img src="http://placekitten.com/250/320" alt="">
+                    <h3>Ses livres</h3>
+                    {% for book in author.book %}
+                        {% if book.title is not null %}
+                            <p>{{ book.title }}</p>
+                        {% else %}
+                            <p>Aucun livre n'est référencé</p>
+                        {% endif %}
+                    {% endfor %}
+                    <h3>Biographie</h3>
+                    <br>
+                    <p class="resume">{{ author.biography | raw }}</p>
+                </div>
+                <div class="infos">
+                    <h3>Informations</h3>
+                    <br>
+                    <p>Né le {{ author.birthDate | date ('d/m/Y') }}
+                        {% if author.deathDate is not null %} et mort le {{ author.deathDate | date ('d/m/Y') }}{% endif %}
+                    </p>
+                    <br>
+                </div>
+                <p class="return">
+                    <a href="{{ path('author_list') }}" class="btn">Retour à la liste des auteurs</a>
+                </p>
+            </article>
+    </section>
+
+{% endblock %}

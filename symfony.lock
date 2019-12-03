@@ -90,8 +90,24 @@
     "egulias/email-validator": {
         "version": "2.1.11"
     },
+    "friendsofsymfony/user-bundle": {
+        "version": "v2.1.2"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
+    },
+    "kms/froala-editor-bundle": {
+        "version": "3.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "666a78d430cecebe61a1990d7b8f638e45b2eeab"
+        },
+        "files": [
+            "./config/packages/kms_froala_editor.yaml",
+            "./config/routes/kms_froala_editor.yaml"
+        ]
     },
     "monolog/monolog": {
         "version": "1.25.2"
@@ -425,6 +441,9 @@
     },
     "symfony/stopwatch": {
         "version": "v4.4.0"
+    },
+    "symfony/templating": {
+        "version": "v4.4.1"
     },
     "symfony/test-pack": {
         "version": "v1.0.6"

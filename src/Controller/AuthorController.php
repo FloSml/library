@@ -237,4 +237,19 @@ class AuthorController extends AbstractController
             'author' => $author,
         ]);
     }
+
+    /**
+     * @Route("/admin/author/{id}", name="admin_author")
+     * @param AuthorRepository $authorRepository
+     * @param $id
+     * @return Response
+     */
+    public function bookShowAdmin(AuthorRepository $authorRepository, $id)
+    {
+        $author = $authorRepository->find($id);
+
+        return $this->render('admin/author/author-show.html.twig', [
+            'author' => $author,
+        ]);
+    }
 }

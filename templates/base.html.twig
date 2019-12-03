@@ -10,21 +10,31 @@
     </head>
     <header>
         <div class="title">
-            <h1><a href="{{ path('index') }}">Ma librairie</a></h1>
+            <h1><a href="{{ path('index') }}"><img src="{{ asset('assets/img/book.png') }}" alt="" class="logo"> Ma librairie</a></h1>
         </div>
         <nav>
+            <div class="nav-login">
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                    <a href="{{ path('fos_user_security_logout') }}">
+                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                    </a>
+                {% else %}
+                    <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                {% endif %}
+            </div>
             <form action="get" id="search-form">
                 <input type="text" name="search" id="search">
             </form>
             <ul>
                 <li>
-                    <a href="{{ path('author_list') }}">Liste des auteurs</a>
+                    <a href="{{ path('author_list') }}">Nos auteurs</a>
                 </li>
                 <li class="li-plus">
                     <a href="{{ path('admin_author_insert_form') }}"><img src="{{ asset('assets/img/plus.png') }}" alt="Ajouter un auteur" title="Ajouter un auteur" class="plus"></a>
                 </li>
                 <li>
-                    <a href="{{ path('book_list') }}">Liste des livres</a>
+                    <a href="{{ path('book_list') }}">Nos livres</a>
                 </li>
                 <li class="li-plus">
                     <a href="{{ path('admin_book_insert_form') }}"><img src="{{ asset('assets/img/plus.png') }}" alt="Ajouter un livre" title="Ajouter un livre" class="plus"></a>

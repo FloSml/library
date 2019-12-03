@@ -138,7 +138,7 @@ class BookController extends AbstractController
         // Je valide la suppression en BDD avec la méthode flush()
         $entityManager->flush();
 
-        return $this->redirectToRoute('admin_book_list');
+        return $this->redirectToRoute('admin');
     }
 
     /**
@@ -246,6 +246,21 @@ class BookController extends AbstractController
         $book = $bookRepository->find($id);
 
         return $this->render('book/book-show.html.twig', [
+            'book' => $book,
+        ]);
+    }
+
+    /**
+     * @Route("/admin/book/{id}", name="admin_book")
+     * @param BookRepository $bookRepository
+     * @param $id
+     * @return Response
+     */
+    public function bookShowAdmin(BookRepository $bookRepository, $id)
+    {
+        $book = $bookRepository->find($id);
+
+        return $this->render('admin/book/book-show.html.twig', [
             'book' => $book,
         ]);
     }

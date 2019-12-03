@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des livres{% endblock %}
+
+{% block content %}
+
+    <div class="title-head">
+        <h2>Nos livres</h2>
+    </div>
+    <section class="container-book">
+        <table class="admin-table">
+            <thead>
+            <tr>
+                <th>Titre du livre</th>
+                <th>Auteur</th>
+                <th>Résumé du livre</th>
+                <th>Style du livre</th>
+                <th>En stock</th>
+                <th>Nombre de pages</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            {% for book in book %}
+                <tr>
+                    <td>{{ book.title }}</td>
+                    <td>auteur</td>
+                    <td>{{ book.resume | slice(0, 30) | raw }} [...]</td>
+                    <td>{{ book.style }}</td>
+                    <td>{{ book.inStock }}</td>
+                    <td>{{ book.nbPages }}</td>
+                    <td><a href="{{ path('admin_book', {'id': book.id}) }}" class="btn">Voir</a></td>
+                    <td><a href="{{ path('admin_book_update_form', {'id': book.id}) }}" class="btn">Modifier</a></td>
+                    <td><a href="{{ path('admin_book_delete', {'id': book.id}) }}" class="btn">Supprimer</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </section>
+    <a href="{{ path('admin_book_insert_form') }}" class="btn">Ajouter un livre</a>
+
+    <div class="title-head">
+        <h2>Nos auteurs</h2>
+    </div>
+    <section class="container-book">
+        <table class="admin-table">
+            <thead>
+            <tr>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Date de naissance</th>
+                <th>Date de mort</th>
+                <th>Biographie</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            {% for author in author %}
+                <tr>
+                    <td>{{ author.firstname }}</td>
+                    <td>{{ author.name }}</td>
+                    <td>{{ author.birthDate | date ('d/m/Y') }}</td>
+                    <td>{{ author.deathDate | date ('d/m/Y') }}</td>
+                    <td>{{ author.biography | slice(0, 30) | raw }} [...]</td>
+                    <td><a href="{{ path('admin_author', {'id': author.id}) }}" class="btn">Voir</a></td>
+                    <td><a href="{{ path('admin_author_update_form', {'id': author.id}) }}" class="btn">Modifier</a></td>
+                    <td><a href="{{ path('admin_author_delete', {'id': author.id}) }}" class="btn">Supprimer</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </section>
+    <a href="{{ path('admin_author_insert_form') }}" class="btn">Ajouter un auteur</a>
+
+{% endblock %}
