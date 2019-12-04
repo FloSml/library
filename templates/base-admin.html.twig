@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    </head>
+    <header>
+        <div class="title">
+            <h1><a href="{{ path('index') }}"><img src="{{ asset('assets/img/book.png') }}" alt="" class="logo"> Ma librairie</a></h1>
+        </div>
+
+        {% block nav %}{% endblock %}
+
+    </header>
+    <body>
+        <main>
+            <aside>
+                <p class="go-to">
+                    <a href="{{ path('admin') }}">Panneau admin</a>
+                </p>
+                <p class="go-to">
+                    <a href="{{ path('admin') }}#books">Nos livres</a>
+                </p>
+                <p class="edit">
+                    <a href="{{ path('admin_book_list') }}">Voir les livres</a><br>
+                    <a href="{{ path('admin_book_insert_form') }}">Ajouter un livre</a><br>
+                </p>
+                <p class="go-to">
+                    <a href="{{ path('admin') }}#authors">Nos auteurs</a>
+                </p>
+                <p class="edit">
+                    <a href="{{ path('admin_author_list') }}">Voir les auteurs</a><br>
+                    <a href="{{ path('admin_author_insert_form') }}">Ajouter un auteur</a><br>
+                </p>
+            </aside>
+            <div class="content-admin">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+        <footer>
+            <p>Oh un footer !</p>
+        </footer>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

@@ -19,6 +19,9 @@ class AuthorController extends AbstractController
      * @param AuthorRepository $authorRepository
      * @return Response
      */
+    // je cree la methode index et je lui passe en paramètres la classe AuthorRepository et une variable $authorRepository
+    // j'instancie la classe AuthorRepository dans la variable $authorRepository
+    // c'est comme faire $authorRepository = new AuthorRepository
     public function index(AuthorRepository $authorRepository)
     {
         $author = $authorRepository->findAll();

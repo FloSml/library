@@ -1,21 +1,46 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-admin.html.twig' %}
 
 {% block title %}Liste des livres{% endblock %}
+
+{% block nav %}
+    <nav>
+        <div class="nav-login">
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                <a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+            {% endif %}
+        </div>
+        <ul>
+            <li>
+                <a href="{{ path('admin') }}">Panneau d'administration</a>
+            </li>
+            <li>
+                <a href="{{ path('admin_author_list') }}">Nos auteurs</a>
+            </li>
+            <li>
+                <a href="{{ path('admin_book_list') }}">Nos livres</a>
+            </li>
+        </ul>
+    </nav>
+{% endblock %}
 
 {% block content %}
 
     <div class="title-head">
-        <h2>Nos livres</h2>
+        <h2 id="books">Nos livres</h2>
     </div>
     <section class="container-book">
         <table class="admin-table">
             <thead>
             <tr>
                 <th>Titre du livre</th>
-                <th>Auteur</th>
                 <th>Résumé du livre</th>
                 <th>Style du livre</th>
-                <th>En stock</th>
+                <th>Stock</th>
                 <th>Nombre de pages</th>
                 <th></th>
                 <th></th>
@@ -25,10 +50,13 @@
             {% for book in book %}
                 <tr>
                     <td>{{ book.title }}</td>
-                    <td>auteur</td>
                     <td>{{ book.resume | slice(0, 30) | raw }} [...]</td>
                     <td>{{ book.style }}</td>
-                    <td>{{ book.inStock }}</td>
+                    <td>{% if book.inStock == 'true' %}
+                            <span class="en-stock">En stock</span>
+                        {% else %}
+                            <span class="pas-en-stock">Pas en stock</span>
+                        {% endif %}</td>
                     <td>{{ book.nbPages }}</td>
                     <td><a href="{{ path('admin_book', {'id': book.id}) }}" class="btn">Voir</a></td>
                     <td><a href="{{ path('admin_book_update_form', {'id': book.id}) }}" class="btn">Modifier</a></td>
@@ -40,7 +68,7 @@
     <a href="{{ path('admin_book_insert_form') }}" class="btn">Ajouter un livre</a>
 
     <div class="title-head">
-        <h2>Nos auteurs</h2>
+        <h2 id="authors">Nos auteurs</h2>
     </div>
     <section class="container-book">
         <table class="admin-table">

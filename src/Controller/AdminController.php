@@ -2,10 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Book;
-use App\Form\BookType;
-use App\Entity\Author;
-use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
 use App\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/admin", name="admin")
+     * @Route("/admin/", name="admin")
      * @param BookRepository $bookRepository
      * @param AuthorRepository $authorRepository
      * @return \Symfony\Component\HttpFoundation\Response

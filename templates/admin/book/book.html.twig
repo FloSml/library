@@ -1,6 +1,32 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-admin.html.twig' %}
 
 {% block title %}Liste des livres{% endblock %}
+
+{% block nav %}
+    <nav>
+        <div class="nav-login">
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                <a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+            {% endif %}
+        </div>
+        <ul>
+            <li class="li-plus">
+                <a href="{{ path('admin') }}">Panneau d'administration</a>
+            </li>
+            <li>
+                <a href="{{ path('admin_author_list') }}">Nos auteurs</a>
+            </li>
+            <li>
+                <a href="{{ path('admin_book_list') }}">Nos livres</a>
+            </li>
+        </ul>
+    </nav>
+{% endblock %}
 
 {% block content %}
 
@@ -17,7 +43,9 @@
                     <p class="auteur">Auteur non renseigné</p>
                 {% endif %}
                 <div class="img-resume-books">
-                    <img src="http://placekitten.com/400/200" alt="">
+                    <div class="img-container-author">
+                        <img src="http://placekitten.com/400/200" alt="" class="img-fluid">
+                    </div>
                     <p class="resume">{{ book.resume  | slice(0, 200) | raw }} [...]</p>
                 </div>
                 <a href="{{ path('admin_book', {'id': book.id}) }}" class="btn">En savoir plus</a>

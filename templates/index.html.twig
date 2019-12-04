@@ -1,4 +1,6 @@
-{% trans_default_domain 'FOSUserBundle' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}Ma librairie{% endblock %}
 
 {% block nav %}
     <nav>
@@ -25,13 +27,22 @@
 
 {% block content %}
 
-    <h1 class="h1-login">Connexion</h1>
-
-    {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
-        {{ form_widget(form) }}
-        <div>
-            <input type="submit" value="{{ 'registration.submit'|trans }}" />
-        </div>
-    {{ form_end(form) }}
+    <div class="title-head">
+        <h2>Nos auteurs</h2>
+    </div>
+    <section class="container-book">
+        {% for author in author %}
+            <article class="book">
+                <h3>{{ author.firstname }} {{ author.name }}</h3>
+                <div class="img-resume-books">
+                    <div class="img-container-author">
+                        <img src="http://placekitten.com/400/200" alt="" class="img-fluid">
+                    </div>
+                    <p class="resume">{{ author.biography  | slice(0, 200) | raw }} [...]</p>
+                </div>
+                <a href="{{ path('author', {'id': author.id}) }}" class="btn">En savoir plus</a>
+            </article>
+        {% endfor %}
+    </section>
 
 {% endblock %}

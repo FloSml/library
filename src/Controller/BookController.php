@@ -23,7 +23,7 @@ class BookController extends AbstractController
     public function book(BookRepository $bookRepository)
     {
         // On utilise le repository de book pour pouvoir sélectionner tous mes éléments de ma table book
-        // Les repository permettent de faire les requêtes SELECT dans les tables de la BDD (find, findAll, ...)
+        // Les repositories permettent de faire les requêtes SELECT dans les tables de la BDD (find, findAll, ...)
         $book = $bookRepository->findAll();
 
         return $this->render('book/book.html.twig', [
@@ -39,7 +39,7 @@ class BookController extends AbstractController
     public function bookAdmin(BookRepository $bookRepository)
     {
         // On utilise le repository de book pour pouvoir sélectionner tous mes éléments de ma table book
-        // Les repository permettent de faire les requêtes SELECT dans les tables de la BDD (find, findAll, ...)
+        // Les repositories permettent de faire les requêtes SELECT dans les tables de la BDD (find, findAll, ...)
         $book = $bookRepository->findAll();
 
         return $this->render('admin/book/book.html.twig', [

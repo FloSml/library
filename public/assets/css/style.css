@@ -16,7 +16,6 @@ body {
 header {
     height: 200px;
     display: flex;
-    justify-content: flex-end;
     align-items: center;
     background-image: url("../img/bg.jpg");
     background-repeat: no-repeat;
@@ -120,6 +119,8 @@ nav ul li a{
 
     /* END NAV */
 
+    /* START MAIN */
+
 main {
     display: flex;
     justify-content: center;
@@ -141,6 +142,49 @@ main {
     justify-content: space-around;
     flex-wrap: wrap;
     margin-bottom: 30px;
+}
+
+.content-admin{
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+aside{
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    background-color: #ddd;
+    padding: 40px 20px;
+}
+
+aside p{
+    text-align: left;
+}
+
+.go-to a{
+    color: #000b31;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.edit a{
+    color: #000b31;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: normal;
+    padding-left: 10px;
+}
+
+.go-to{
+    margin: 20px 0;
+}
+
+aside a:hover{
+    text-decoration: underline;
 }
 
 .article-full{
@@ -204,6 +248,8 @@ main {
     margin-bottom: 30px;
 }
 
+    /* END MAIN */
+
 .img-fluid{
     width: 100%;
     height: auto;
@@ -211,6 +257,14 @@ main {
 
 .return{
     margin: 30px 0 10px;
+}
+
+.return .btn{
+    display: initial;
+}
+
+.return .btn-first{
+    display: block;
 }
 
 .title-head{
@@ -267,14 +321,22 @@ h3{
 }
 
 .btn{
-     padding: 10px 15px;
-     background-color: #000b31;
-     color: #fff;
-     border-radius: 3px;
-     text-decoration: none;
-     display: block;
-     margin-bottom: 20px;
+    padding: 10px 15px;
+    background-color: #000b31;
+    color: #fff;
+    border: solid 1px #000b31;
+    border-radius: 3px;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 20px;
+    transition: all .5s ease;
+    text-align: center;
  }
+
+.btn:hover{
+    background-color: transparent;
+    color: #000b31;
+}
 
 .img-resume{
     margin: 30px 0;
@@ -296,8 +358,8 @@ h3{
 
 .img-container-author{
     width: 90%;
-    height: 200px;
     overflow: hidden;
+    margin-bottom: 30px;
 }
 
 .resume{
@@ -335,6 +397,7 @@ h3{
     padding: 10px;
     border-collapse: collapse;
     border: 0;
+    text-align: center;
 }
 
 .admin-table th{
@@ -392,6 +455,12 @@ h3{
 
 #author_birthDate, #author_deathDate{
     margin: 0 !important;
+}
+
+#book_resume, #author_biography{
+    min-height: 180px;
+    overflow-x: hidden;
+    padding: 5px;
 }
 
 .success{
@@ -476,3 +545,45 @@ footer p{
 
 /* MEDIA QUERIES */
 
+@media screen and (max-width: 1200px) {
+    .book {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .title{
+        width: 60%;
+    }
+    nav{
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    header{
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .title{
+        width: 100%;
+        padding: 40px 0 0;
+        justify-content: center;
+    }
+    nav{
+        width: 100%;
+        justify-content: center;
+        padding: 0;
+    }
+    .title-head h2{
+        margin-bottom: 10px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .book {
+        width: 100%;
+        box-shadow: none;
+        border-radius: 0;
+    }
+}
