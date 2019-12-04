@@ -20,6 +20,9 @@ security:
             form_login:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
+                # redirect après login avec 2 lignes dessous
+                always_use_default_target_path: false
+                default_target_path: /admin/
 
             logout:       true
             anonymous:    true

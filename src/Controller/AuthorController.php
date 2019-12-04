@@ -26,7 +26,7 @@ class AuthorController extends AbstractController
     {
         $author = $authorRepository->findAll();
 
-        return $this->render('author/author.html.twig', [
+        return $this->render('index.html.twig', [
             'author' => $author,
         ]);
     }
@@ -60,52 +60,6 @@ class AuthorController extends AbstractController
     }
 
     /**
-     * @Route("/admin/author/insert", name="admin_author_insert")
-     * @param EntityManagerInterface $entityManager
-     * @return Response
-     * @throws \Exception
-     */
-    // public function est une méthode dans la classe
-    public function insertAuthor(EntityManagerInterface $entityManager)
-    {
-        // On crée un nouveau livre pour l'envoyer dans la table author
-        $author = new Author();
-        $author->setFirstname('Florian');
-        $author->setName('Soumaille');
-        $author->setBirthDate(new \DateTime('03/04/1986'));
-        $author->setDeathDate(new \DateTime(null));
-        $author->setBiography('Cet auteur incompris n\'en est pas à son coup d\'essai cette année.');
-
-        $entityManager->persist($author);
-        $entityManager->flush();
-
-        return $this->render('admin/author/author-insert.html.twig', [
-            'author' => $author,
-        ]);
-    }
-
-    /**
-     * @Route("/admin/author/update/{id}", name="admin_author_update")
-     * @param AuthorRepository $authorRepository
-     * @param EntityManagerInterface $entityManager
-     * @param $id
-     * @return RedirectResponse
-     */
-    public function updateAuthor(AuthorRepository $authorRepository, EntityManagerInterface $entityManager, $id)
-    {
-        // J'utilise le Repository de Author pour récupérer un livre en fonction de son id
-        $author = $authorRepository->find($id);
-
-        // Je donne un nouveau titre à mon livre
-        $author->setFirstname('Jean Alfred');
-
-        $entityManager->persist($author);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('admin_author_list');
-    }
-
-    /**
      * @Route("/admin/author/delete/{id}", name="admin_author_delete")
      * @param AuthorRepository $authorRepository
      * @param EntityManagerInterface $entityManager
@@ -118,12 +72,19 @@ class AuthorController extends AbstractController
         // $author = Entité Author
         $author = $authorRepository->find($id);
 
+        $message = "";
+
         // J'utilise l'entityManager avec la méthode remove pour enregistrer la suppression du author dans l'unité de travail
         $entityManager->remove($author);
         // Je valide la suppression en BDD avec la méthode flush()
         $entityManager->flush();
 
-        return $this->redirectToRoute('admin_author_list');
+        $this->addFlash('success', 'L\'auteur a bien été supprimé');
+
+        return $this->redirectToRoute('admin', [
+            'message' => $message,
+        ]);
+
     }
 
     // On crée une annotation @Route à laquelle on donne un nom pour
@@ -183,6 +144,8 @@ class AuthorController extends AbstractController
                 $entityManager->persist($author);
                 $entityManager->flush();
             }
+            $this->addFlash('success', 'L\'auteur a bien été ajouté');
+            return $this->redirectToRoute('admin');
         }
         // à partir de mon gabarit, je crée la vue de mon formulaire
         $authorFormView = $authorForm->createView();
@@ -214,10 +177,11 @@ class AuthorController extends AbstractController
 
             $authorForm->handleRequest($request);
             if ($authorForm->isValid()) {
-                $message = "L'auteur a bien été ajouté/modifié !";
                 $entityManager->persist($author);
                 $entityManager->flush();
             }
+            $this->addFlash('success', 'L\'auteur a bien été modifié');
+            return $this->redirectToRoute('admin');
         }
         $authorFormView = $authorForm->createView();
         return $this->render('admin/author/author-insert-form.html.twig', [

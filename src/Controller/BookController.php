@@ -133,27 +133,18 @@ class BookController extends AbstractController
         // $book = Entité Book
         $book = $bookRepository->find($id);
 
+        $message = "";
+
         // J'utilise l'entityManager avec la méthode remove pour enregistrer la suppression du book dans l'unité de travail
         $entityManager->remove($book);
         // Je valide la suppression en BDD avec la méthode flush()
         $entityManager->flush();
 
-        return $this->redirectToRoute('admin');
-    }
+        $this->addFlash('success', 'Le livre a bien été supprimé');
 
-    /**
-     * @Route("/book_by_genre", name="book_by_genre")
-     * @param BookRepository $bookRepository
-     */
-    // On appelle le BookRepository (en le passant en paramètre de la méthode)
-    // On appelle la méthode qu'on a créé dans le BookRepository ("getByGenre()")
-    public function getBooksByGenre(BookRepository $bookRepository)
-    {
-        $books= $bookRepository->getByGenre();
-
-        dump($books); die;
-        // Cette méthode est censée nous retourner tous les livres en fonction de leur type
-        // Elle va donc exécuter une requête SELECT en base de données
+        return $this->redirectToRoute('admin', [
+            'message' => $message,
+        ]);
     }
 
     /**
@@ -162,40 +153,44 @@ class BookController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @return Response
      */
+    // je crée la méthode insertBookForm et je lui passe en paramètres les classes
+    // Request avec la variable $request et EntityManagerInterface avec la variable $entityManager
+    // j'instancie les classes Request et EntityManagerInterface dans des variables
+    // c'est comme faire $request = new Request
     public function insertBookForm(Request $request, EntityManagerInterface $entityManager)
     {
-        // J'utilise le gabarit de formulaire pour créer mon formulaire
-        // j'envoie mon formulaire à un fichier twig et je l'affiche
         // je crée un nouveau Book en créant une nouvelle instance de l'entité Book
         $book = new Book();
 
+        // je déclare une variable $message
         $message= "";
 
         // J'utilise la méthode createForm pour créer le gabarit / le constructeur de
         // formulaire pour le Book : BookType (que j'ai généré en ligne de commandes)
         // Et je lui associe mon entité Book vide
         $bookForm = $this->createForm(BookType::class, $book);
-        // Si je suis sur une méthode POST, donc qu'un formulaire a été envoyé
+
+        // Si le formulaire a été envoyé avec la méthode POST
         if ($request->isMethod('Post')) {
+
             // Je récupère les données de la requête (POST)
             // et je les associe à mon formulaire
             $bookForm->handleRequest($request);
+
             // Si les données de mon formulaire sont valides
-            // (que les types rentrés dans les inputs sont bons,
-            // que tous les champs obligatoires sont remplis etc)
+            // (types dans les inputs ok, champs obligatoires renseignés)
             if ($bookForm->isValid()) {
-                $message = "Le livre a bien été ajouté/modifié !";
-                // J'enregistre en BDD ma variable $book
-                // qui n'est plus vide, car elle a été remplie
-                // avec les données du formulaire
+                // je fais persister les données
                 $entityManager->persist($book);
+                // j'enregistre en BDD ma variable $book remplie avec les données du formulaire
                 $entityManager->flush();
             }
+            $this->addFlash('success', 'Le livre a bien été ajouté');
+            return $this->redirectToRoute('admin');
         }
         // à partir de mon gabarit, je crée la vue de mon formulaire
         $bookFormView = $bookForm->createView();
-        // je retourne un fichier twig, et je lui envoie ma variable qui contient
-        // mon formulaire
+        // je retourne un fichier twig, et je lui envoie ma variable qui contient mon formulaire
         return $this->render('admin/book/book-insert-form.html.twig', [
             'bookFormView' => $bookFormView,
             'message' => $message,
@@ -222,10 +217,12 @@ class BookController extends AbstractController
 
             $bookForm->handleRequest($request);
             if ($bookForm->isValid()) {
-                $message = ('Le livre a bien été ajouté/modifié !');
+
                 $entityManager->persist($book);
                 $entityManager->flush();
             }
+            $this->addFlash('success', 'Le livre a bien été modifié');
+            return $this->redirectToRoute('admin');
         }
 
         $bookFormView = $bookForm->createView();

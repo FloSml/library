@@ -38,6 +38,13 @@
                 </p>
             </aside>
             <div class="content-admin">
+
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        <p>{{ message }}</p>
+                    </div>
+                {% endfor %}
+
                 {% block content %}{% endblock %}
             </div>
         </main>

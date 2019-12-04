@@ -19,6 +19,11 @@
     <body>
         <main>
             <div class="content">
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
                 {% block content %}{% endblock %}
             </div>
         </main>
