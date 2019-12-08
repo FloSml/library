@@ -8,15 +8,15 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     </head>
-    <header>
-        <div class="title">
-            <h1><a href="{{ path('index') }}"><img src="{{ asset('assets/img/book.png') }}" alt="" class="logo"> Ma librairie</a></h1>
-        </div>
-
-        {% block nav %}{% endblock %}
-
-    </header>
     <body>
+        <header>
+            <div class="title">
+                <h1><a href="{{ path('index') }}"><img src="{{ asset('assets/img/book.png') }}" alt="" class="logo"> Ma librairie</a></h1>
+            </div>
+
+            {% block nav %}{% endblock %}
+
+        </header>
         <main>
             <div class="content">
                 {% for message in app.flashes('success') %}
